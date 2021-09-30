@@ -100,16 +100,22 @@ class _MyHomePageState extends State<MyHomePage> {
 
     DateTime now = new DateTime.now();
 
-    String _Mensaje='${_locationData.time},${_locationData.latitude},${_locationData.longitude}';
-    //print(_Mensaje);
-    _UDP(_Mensaje);
+    String _Mensaje='${_locationData.time},${_locationData.latitude},${_locationData.longitude},';
+    print(_Mensaje);
+
+    _UDP(_Mensaje,'35.166.98.150');
+    _UDP(_Mensaje,'18.237.44.28');
+    _UDP(_Mensaje,'3.131.95.181'); //
+    _UDP(_Mensaje,'18.217.184.66');
+    _UDP(_Mensaje,'18.188.242.23');
 
   }
 
-  _UDP(_Mensaje) async{
-    final IP=await InternetAddress.lookup('taxigps.hopto.org');
+  _UDP(_Mensaje, IP) async{
+    //final IP=await InternetAddress.lookup('taxigps.hopto.org');
     RawDatagramSocket.bind(InternetAddress.anyIPv4, 0).then((RawDatagramSocket udpSocket){
-      udpSocket.send(utf8.encode(_Mensaje),(IP.first),8050);});
+      udpSocket.send(utf8.encode(_Mensaje),InternetAddress(IP),8050);
+    });
   }
 
 }
