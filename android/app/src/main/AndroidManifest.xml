@@ -1,7 +1,15 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.app">
-   <application
-        android:label="app"
+    package="com.example.geoposicionamiento">
+    <uses-permission android:name="android.permission.SEND_SMS"/>
+    <uses-permission android:name="android.permission.READ_SMS"/>
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.BLUETHOOTH" />
+    <uses-permission android:name="android.permission.BLUETHOOTH_ADMIN"/>
+    <uses-permission android:name="android.permission.INTERNET"/>
+
+    <application
+        android:label="geoposicionamiento"
         android:icon="@mipmap/ic_launcher">
         <activity
             android:name=".MainActivity"
