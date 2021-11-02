@@ -1,7 +1,16 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.app">
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.example.geoposicionamiento">
     <!-- Flutter needs it to communicate with the running application
          to allow setting breakpoints, to provide hot reload, etc.
     -->
-    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.SEND_SMS"/>
+    <uses-permission android:name="android.permission.READ_SMS"/>
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.BLUETHOOTH" />
+    <uses-permission android:name="android.permission.BLUETHOOTH_ADMIN"/>
+    <application
+        android:usesCleartextTraffic="true"
+        tools:node="merge" />
 </manifest>
