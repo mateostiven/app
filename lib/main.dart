@@ -129,7 +129,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   style: ButtonStyle(
                     foregroundColor: MaterialStateProperty.all<Color>(Colors.blue),
                   ),
-                  onPressed: () {Conectar("");},
+                  onPressed: () {Conectar(); SendMensaje();},
                   child: Text('Conectar OBD2'),
                 ),
 
@@ -212,8 +212,8 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
     );
   }
-
-  Conectar(String data) async{
+  var connection;
+  Conectar() async{
     BluetoothState _bluetoothState = BluetoothState.UNKNOWN;
     _bluetoothState = await FlutterBluetoothSerial.instance.state;
     FlutterBluetoothSerial bluetooth = FlutterBluetoothSerial.instance;
@@ -246,24 +246,17 @@ class _MyHomePageState extends State<MyHomePage> {
 
           print('Connected to the device'+_device.address);
           Mensaje="Conectado con OBDII "+_device.address;
-          if(connection != null){
-            connection.output.add(Uint8List.fromList(utf8.encode("ATZ \r\n")));
-            await connection.output.allSent;
-            connection.output.add(Uint8List.fromList(utf8.encode("ATSP0 \r\n")));
-            await connection.output.allSent;
-            connection.output.add(Uint8List.fromList(utf8.encode("ATDP \r\n")));
-            await connection.output.allSent;
-            connection.output.add(Uint8List.fromList(utf8.encode("01 OC \r\n")));
-            await connection.output.allSent;
 
-            }
           Mensaje="Enviando mensaje";
+
           Mensaje="";
-          connection.input!.listen((Uint8List data) {
-            //Data entry point
+          connection.input!.listen((Uint8List data){
+
             Mensaje=Mensaje+(ascii.decode(data));
+            if (ascii.decode(data).contains('>')) {
+              connection.finish();
+            }
           });
-          connection.close();
         }
       }
       if (Mensaje=="Buscando dispositivo..."){Mensaje="No se encontro el OBDII";}
@@ -275,5 +268,8 @@ class _MyHomePageState extends State<MyHomePage> {
     }
   }
 
+  void SendMensaje() async{
+    connection.output.add(Uint8List.fromList(utf8.encode("010C \r\n")));
+    await connection.output.allSent;}
 
 }
